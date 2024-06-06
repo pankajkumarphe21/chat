@@ -2,18 +2,23 @@ import express from "express";
 const app=express()
 import http from "http";
 import cors from "cors";
-import { Server } from "socket.io";
+import socketIo from "socket.io";
 
-app.use(cors());
-const server=http.createServer(app);
+app.use(cors({
+    origin: 'https://chat-client-one-sable.vercel.app',
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
 
-const io=new Server(server,{
-    cors:{
-        origin:"https://chat-client-one-sable.vercel.app",
-        methods:["GET","POST"],
-        optionsSuccessStatus:200
+const server = http.createServer(app);
+
+const io = socketIo(server, {
+    cors: {
+        origin: 'https://chat-client-one-sable.vercel.app',
+        methods: ['GET', 'POST'],
+        credentials: true
     }
-})
+});
 
 io.on("connection",(socket)=>{
     socket.on("join_room",(data)=>{
@@ -21,9 +26,6 @@ io.on("connection",(socket)=>{
     })
     socket.on("send_message",(data)=>{
         socket.to(data.room).emit("receive_message",data)
-    })
-    app.get('/:name',(req,res)=>{
-        res.send(req.params.name);
     })
 })
 
