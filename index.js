@@ -2,7 +2,7 @@ import express from "express";
 const app=express()
 import http from "http";
 import cors from "cors";
-import socketIo from "socket.io";
+import {Server} from "socket.io";
 
 app.use(cors({
     origin: 'https://chat-client-one-sable.vercel.app',
@@ -12,7 +12,7 @@ app.use(cors({
 
 const server = http.createServer(app);
 
-const io = socketIo(server, {
+const io = new Server(server, {
     cors: {
         origin: 'https://chat-client-one-sable.vercel.app',
         methods: ['GET', 'POST'],
