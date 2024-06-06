@@ -9,8 +9,9 @@ const server=http.createServer(app);
 
 const io=new Server(server,{
     cors:{
-        origin:"https://chat-client-one-sable.vercel.app/",
+        origin:"https://chat-client-one-sable.vercel.app",
         methods:["GET","POST"],
+        optionsSuccessStatus:200
     }
 })
 
