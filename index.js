@@ -21,6 +21,9 @@ io.on("connection",(socket)=>{
     socket.on("send_message",(data)=>{
         socket.to(data.room).emit("receive_message",data)
     })
+    app.get('/:name',(req,res)=>{
+        res.send(req.params.name);
+    })
 })
 
 app.get('/',(req,res)=>{
