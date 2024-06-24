@@ -9,15 +9,6 @@ app.use(cors({
     origin: '*',
 }));
 
-app.use('/socket.io', createProxyMiddleware({
-    target: 'https://chat-client-one-sable.vercel.app/',
-    changeOrigin: true,
-    ws: true,
-    onProxyReq: (proxyReq, req, res) => {
-        proxyReq.setHeader('Access-Control-Allow-Origin', '*');
-    }
-}));
-
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -30,7 +21,6 @@ const io = new Server(server, {
 
 io.on("connection",(socket)=>{
     socket.on("join_room",(data)=>{
-        console.log('Hi')
         socket.join(data);
     })
     socket.on("send_message",(data)=>{
@@ -39,7 +29,6 @@ io.on("connection",(socket)=>{
 })
 
 app.get('/',(req,res)=>{
-    console.log('H')
     res.send('Hello');
 })
 
