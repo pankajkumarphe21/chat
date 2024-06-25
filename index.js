@@ -31,4 +31,8 @@ app.get('/',(req,res)=>{
     res.send('Hello');
 })
 
+app.get('/:name',(req,res)=>{
+    res.send(req.params.name);
+})
+
 server.listen(process.env.PORT || 3001)
